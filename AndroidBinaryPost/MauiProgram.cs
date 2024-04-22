@@ -4,7 +4,7 @@ namespace AndroidBinaryPost
 {
     public static class MauiProgram
     {
-        public static string ServerAddress = "d18f-65-128-160-145.ngrok-free.app";
+        public static string ServerAddress = "89ae-65-128-160-145.ngrok-free.app";
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
@@ -17,10 +17,10 @@ namespace AndroidBinaryPost
                 });
 
             // this works on Windows and fails on Android
-            //builder.Services.AddScoped<HttpClient>();
+            builder.Services.AddScoped<HttpClient>();
 
             // this works on Android (and Windows)
-            builder.Services.AddScoped<HttpClient>((p) => new HttpClient(new SocketsHttpHandler()));
+            //builder.Services.AddScoped<HttpClient>((p) => new HttpClient(new SocketsHttpHandler()));
 
             builder.Services.AddTransient<MainPage>();
 

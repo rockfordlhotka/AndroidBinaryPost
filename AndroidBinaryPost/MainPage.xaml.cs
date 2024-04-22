@@ -1,4 +1,7 @@
-﻿namespace AndroidBinaryPost
+﻿using System.Net.Http.Headers;
+using System.Reflection.PortableExecutable;
+
+namespace AndroidBinaryPost
 {
     public partial class MainPage : ContentPage
     {
@@ -14,9 +17,18 @@
         {
             var data = new byte[1024];
             new Random().NextBytes(data);
-            var content = new ByteArrayContent(data);
-            var response = await HttpClient.PostAsync(
-                $"https://{MauiProgram.ServerAddress}/BinaryService?operation=counter", content);
+
+            //var content = new ByteArrayContent(data);
+            //content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            //var response = await HttpClient.PostAsync(
+            //    $"https://{MauiProgram.ServerAddress}/BinaryService?operation=counter", content);
+
+            var request = new HttpRequestMessage(HttpMethod.Post, $"https://{MauiProgram.ServerAddress}/BinaryService?operation=counter")
+            {
+                Content = new ByteArrayContent(data)
+            };
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            var response = await HttpClient.SendAsync(request);
 
             if (response.IsSuccessStatusCode)
             {
